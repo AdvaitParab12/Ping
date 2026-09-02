@@ -8,7 +8,7 @@ export default function Text({ style, ...props }) {
       {...props}
       style={[
         {
-          fontFamily: "Poppins",
+          fontFamily: "Inter",
         },
         style,
       ]}
