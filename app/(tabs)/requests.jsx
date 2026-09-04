@@ -1,15 +1,9 @@
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "../../components/AppText";
 
 import { useState } from "react";
 import { useRouter } from "expo-router";
-
 
 const initialRequests = [
   {
@@ -37,22 +31,15 @@ export default function Requests() {
 
   const [requests, setRequests] = useState(initialRequests);
 
-
-  
-
   const handleAccept = () => {
     setRequests((currentRequests) =>
-      currentRequests.filter(
-        (request) => request.id !== id
-      )
+      currentRequests.filter((request) => request.id !== id),
     );
   };
 
   const handleDecline = () => {
     setRequests((currentRequests) =>
-      currentRequests.filter(
-        (request) => request.id !== id
-      )
+      currentRequests.filter((request) => request.id !== id),
     );
   };
 
@@ -65,41 +52,27 @@ export default function Requests() {
       .toUpperCase();
   };
 
-  const renderRequest = ({
-    item,
-  }) => {
+  const renderRequest = ({ item }) => {
     return (
       <View style={styles.requestCard}>
-
         {/* Avatar */}
 
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {getInitials(item.name)}
-          </Text>
+          <Text style={styles.avatarText}>{getInitials(item.name)}</Text>
         </View>
 
         {/* User Information */}
 
         <View style={styles.requestInfo}>
-
           <View style={styles.nameRow}>
-            <Text style={styles.name}>
-              {item.name}
-            </Text>
+            <Text style={styles.name}>{item.name}</Text>
 
-            <Text style={styles.time}>
-              {item.time}
-            </Text>
+            <Text style={styles.time}>{item.time}</Text>
           </View>
 
-          <Text style={styles.relation}>
-            {item.relation}
-          </Text>
+          <Text style={styles.relation}>{item.relation}</Text>
 
-          <Text style={styles.phone}>
-            {item.phone}
-          </Text>
+          <Text style={styles.phone}>{item.phone}</Text>
 
           <Text style={styles.message}>
             Wants to add you as a trusted contact.
@@ -108,7 +81,6 @@ export default function Requests() {
           {/* Actions */}
 
           <View style={styles.actionRow}>
-
             <Pressable
               style={({ pressed }) => [
                 styles.acceptButton,
@@ -116,9 +88,7 @@ export default function Requests() {
               ]}
               onPress={() => handleAccept(item.id)}
             >
-              <Text style={styles.acceptText}>
-                ✓ Accept
-              </Text>
+              <Text style={styles.acceptText}>✓ Accept</Text>
             </Pressable>
 
             <Pressable
@@ -128,13 +98,9 @@ export default function Requests() {
               ]}
               onPress={() => handleDecline(item.id)}
             >
-              <Text style={styles.declineText}>
-                Decline
-              </Text>
+              <Text style={styles.declineText}>Decline</Text>
             </Pressable>
-
           </View>
-
         </View>
       </View>
     );
@@ -142,71 +108,42 @@ export default function Requests() {
 
   return (
     <SafeAreaView style={styles.container}>
-
       {/* HEADER */}
 
       <View style={styles.header}>
-
-        <Pressable
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.backText}>
-            ←
-          </Text>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backText}>←</Text>
         </Pressable>
 
         <View style={styles.headerContent}>
-          <Text style={styles.title}>
-            Contact Requests
-          </Text>
+          <Text style={styles.title}>Contact Requests</Text>
 
-          <Text style={styles.subtitle}>
-            Manage people who want to connect
-          </Text>
+          <Text style={styles.subtitle}>Manage people who want to connect</Text>
         </View>
-
       </View>
 
       {/* SUMMARY CARD */}
 
       <View style={styles.summaryCard}>
-
-        
-
         <View style={styles.summaryContent}>
-
-          <Text style={styles.summaryTitle}>
-            Pending Requests
-          </Text>
+          <Text style={styles.summaryTitle}>Pending Requests</Text>
 
           <Text style={styles.summaryText}>
-            Review requests before adding someone
-            to your trusted contacts.
+            Review requests before adding someone to your trusted contacts.
           </Text>
-
         </View>
 
         <View style={styles.countBadge}>
-          <Text style={styles.countText}>
-            {requests.length}
-          </Text>
+          <Text style={styles.countText}>{requests.length}</Text>
         </View>
-
       </View>
 
       {/* SECTION */}
 
       <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Requests</Text>
 
-        <Text style={styles.sectionTitle}>
-          Requests
-        </Text>
-
-        <Text style={styles.sectionCount}>
-          {requests.length} pending
-        </Text>
-
+        <Text style={styles.sectionCount}>{requests.length} pending</Text>
       </View>
 
       {/* REQUEST LIST */}
@@ -219,31 +156,21 @@ export default function Requests() {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-
             <View style={styles.emptyIconContainer}>
-              <Text style={styles.emptyIcon}>
-                ✓
-              </Text>
+              <Text style={styles.emptyIcon}>✓</Text>
             </View>
 
-            <Text style={styles.emptyTitle}>
-              No pending requests
-            </Text>
+            <Text style={styles.emptyTitle}>No pending requests</Text>
 
-            <Text style={styles.emptyText}>
-              You're all caught up!
-            </Text>
-
+            <Text style={styles.emptyText}>You're all caught up!</Text>
           </View>
         }
       />
-
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
   /* CONTAINER */
 
   container: {

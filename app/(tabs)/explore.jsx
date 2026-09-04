@@ -1,13 +1,7 @@
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { Radio } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "../../components/AppText";
 
 import { useState } from "react";
 import { useRouter } from "expo-router";
