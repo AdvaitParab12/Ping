@@ -1,28 +1,38 @@
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/AppText";
+import {
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
-const initialRequests = [
+
+
+const initialRequests= [
   {
     id: "1",
-    name: "Arjun Mehta",
+    name: "Rahul Sharma",
+    phone: "+91 98765 43210",
     relation: "Friend",
-    phone: "+91 98765 43214",
+    time: "5 min ago",
   },
   {
     id: "2",
-    name: "Kavya Shah",
+    name: "Priya Shah",
+    phone: "+91 98765 43211",
     relation: "Family",
-    phone: "+91 98765 43215",
+    time: "20 min ago",
   },
   {
     id: "3",
-    name: "Rohan Patel",
+    name: "Amit Patel",
+    phone: "+91 98765 43212",
     relation: "Friend",
-    phone: "+91 98765 43216",
+    time: "1 hour ago",
   },
 ];
 
@@ -52,7 +62,7 @@ export default function Requests() {
       .toUpperCase();
   };
 
-  const renderRequest = ({ item }) => {
+  const renderRequest = ({ item } ) => {
     return (
       <View style={styles.requestCard}>
         {/* Avatar */}
@@ -125,6 +135,10 @@ export default function Requests() {
       {/* SUMMARY CARD */}
 
       <View style={styles.summaryCard}>
+        <View style={styles.summaryIcon}>
+          <Text style={styles.summaryIconText}>👥</Text>
+        </View>
+
         <View style={styles.summaryContent}>
           <Text style={styles.summaryTitle}>Pending Requests</Text>
 
