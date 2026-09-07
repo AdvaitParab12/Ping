@@ -41,7 +41,7 @@ export default function Requests() {
 
   const [requests, setRequests] = useState(initialRequests);
 
-  const handleAccept = () => {
+  const handleAccept = (id) => {
     setRequests((currentRequests) =>
       currentRequests.filter((request) => request.id !== id),
     );
@@ -53,7 +53,7 @@ export default function Requests() {
     );
   };
 
-  const getInitials = () => {
+  const getInitials = (name) => {
     return name
       .split(" ")
       .map((word) => word.charAt(0))
