@@ -1,5 +1,7 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "@/components/AppText";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function IncomingPing() {

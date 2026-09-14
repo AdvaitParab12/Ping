@@ -1,7 +1,14 @@
-import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
-import { Radio } from "lucide-react-native";
+import {
+  ImageBackground,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  View,
+  FlatList,
+} from "react-native";
+import { Radio, Search } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/AppText";
+import Text from "@/components/AppText";
 
 import { useState } from "react";
 import { useRouter } from "expo-router";
@@ -133,24 +140,30 @@ export default function Contacts() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* ================= HEADER ================= */}
+    <ImageBackground
+      source={require("../../assets/images/green_bg.jpg")}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <SafeAreaView style={styles.container}>
+          {/* ================= HEADER ================= */}
 
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.title}>Contacts</Text>
+          <View style={styles.header}>
+            <View style={styles.headerLeft}>
+              <Text style={styles.title}>Contacts</Text>
 
-          <Text style={styles.subtitle}>Your trusted people</Text>
-        </View>
+              <Text style={styles.subtitle}>Your trusted people</Text>
+            </View>
 
-        <Pressable style={styles.topAddButton} onPress={handleAddContact}>
-          <Text style={styles.topAddIcon}>+</Text>
-        </Pressable>
-      </View>
+            <Pressable style={styles.topAddButton} onPress={handleAddContact}>
+              <Text style={styles.topAddIcon}>+</Text>
+            </Pressable>
+          </View>
 
-      {/* ================= INFO CARD ================= */}
+          {/* ================= INFO CARD ================= */}
 
-      <View style={styles.infoCard}>
+          {/* <View style={styles.infoCard}>
         <View style={styles.infoIconContainer}>
           <Text style={styles.infoIcon}>🔔</Text>
         </View>
@@ -162,109 +175,111 @@ export default function Contacts() {
             Ping a trusted contact when you need their attention.
           </Text>
         </View>
-      </View>
+      </View> */}
 
-      {/* ================= SEARCH ================= */}
+          {/* ================= SEARCH ================= */}
 
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchIcon}>🔍</Text>
+          <View style={styles.searchContainer}>
+            <Text style={styles.searchIcon}>
+              <Search style={{ color: "#22C55E" }} />
+            </Text>
 
-        <TextInput
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Search trusted contacts"
-          placeholderTextColor="#9CA3AF"
-          style={styles.searchInput}
-        />
+            <TextInput
+              value={search}
+              onChangeText={setSearch}
+              placeholder="Search trusted contacts"
+              placeholderTextColor="#9CA3AF"
+              style={styles.searchInput}
+            />
 
-        {search.length > 0 && (
-          <Pressable onPress={() => setSearch("")}>
-            <Text style={styles.clearSearch}>×</Text>
-          </Pressable>
-        )}
-      </View>
-
-      {/* ================= SECTION HEADER ================= */}
-
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionTitleContainer}>
-          <Text style={styles.sectionTitle}>Trusted Contacts</Text>
-
-          <View style={styles.countBadge}>
-            <Text style={styles.countText}>{filteredContacts.length}</Text>
+            {search.length > 0 && (
+              <Pressable onPress={() => setSearch("")}>
+                <Text style={styles.clearSearch}>×</Text>
+              </Pressable>
+            )}
           </View>
-        </View>
 
-        <Text style={styles.onlineCount}>
-          {contacts.filter((contact) => contact.online).length} online
-        </Text>
-      </View>
+          {/* ================= SECTION HEADER ================= */}
 
-      {/* ================= CONTACT LIST ================= */}
+          <View style={styles.sectionHeader}>
+            <View style={styles.sectionTitleContainer}>
+              <Text style={styles.sectionTitle}>Trusted Contacts</Text>
 
-      <FlatList
-        data={filteredContacts}
-        keyExtractor={(item) => item.id}
-        renderItem={renderContact}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>🔍</Text>
+              <View style={styles.countBadge}>
+                <Text style={styles.countText}>{filteredContacts.length}</Text>
+              </View>
+            </View>
 
-            <Text style={styles.emptyTitle}>No contacts found</Text>
-
-            <Text style={styles.emptyText}>
-              Try searching with another name.
+            <Text style={styles.onlineCount}>
+              {contacts.filter((contact) => contact.online).length} online
             </Text>
           </View>
-        }
-      />
 
-      {/* ================= ADD CONTACT CTA ================= */}
+          {/* ================= CONTACT LIST ================= */}
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.addContactCard,
-          pressed && styles.addContactPressed,
-        ]}
-        onPress={handleAddContact}
-      >
-        <View style={styles.addContactIcon}>
-          <Text style={styles.addContactIconText}>+</Text>
-        </View>
+          <FlatList
+            data={filteredContacts}
+            keyExtractor={(item) => item.id}
+            renderItem={renderContact}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContent}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyIcon}>🔍</Text>
 
-        <View style={styles.addContactContent}>
-          <Text style={styles.addContactTitle}>Add Trusted Contact</Text>
+                <Text style={styles.emptyTitle}>No contacts found</Text>
 
-          <Text style={styles.addContactSubtitle}>
-            Add someone you trust to Ping you
-          </Text>
-        </View>
+                <Text style={styles.emptyText}>
+                  Try searching with another name.
+                </Text>
+              </View>
+            }
+          />
 
-        <Text style={styles.arrow}>→</Text>
-      </Pressable>
+          {/* ================= ADD CONTACT CTA ================= */}
 
-      {/* ================= FLOATING BUTTON ================= */}
+          <Pressable
+            style={({ pressed }) => [
+              styles.addContactCard,
+              pressed && styles.addContactPressed,
+            ]}
+            onPress={handleAddContact}
+          >
+            <View style={styles.addContactIcon}>
+              <Text style={styles.addContactIconText}>+</Text>
+            </View>
 
-      <Pressable style={styles.floatingButton} onPress={handleAddContact}>
-        <Text style={styles.floatingButtonText}>+</Text>
-      </Pressable>
-    </SafeAreaView>
+            <View style={styles.addContactContent}>
+              <Text style={styles.addContactTitle}>Add Trusted Contact</Text>
+
+              <Text style={styles.addContactSubtitle}>
+                Add someone you trust to Ping you
+              </Text>
+            </View>
+
+            <Text style={styles.arrow}>→</Text>
+          </Pressable>
+
+          {/* ================= FLOATING BUTTON ================= */}
+
+          <Pressable style={styles.floatingButton} onPress={handleAddContact}>
+            <Text style={styles.floatingButtonText}>+</Text>
+          </Pressable>
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  /* ================= CONTAINER ================= */
-
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FC",
     paddingHorizontal: 20,
   },
-
-  /* ================= HEADER ================= */
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -281,12 +296,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 29,
     fontWeight: "700",
-    color: "#111827",
+    color: "#fff",
   },
 
   subtitle: {
     fontSize: 13,
-    color: "#7B8494",
+    color: "#eee",
     marginTop: 4,
   },
 
@@ -315,7 +330,7 @@ const styles = StyleSheet.create({
   topAddIcon: {
     fontSize: 29,
     fontWeight: "300",
-    color: "#5368F2",
+    color: "#22C55E",
     lineHeight: 32,
   },
 
@@ -352,7 +367,7 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#3446B8",
+    color: "#22C55E",
   },
 
   infoText: {
@@ -411,14 +426,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 19,
     fontWeight: "700",
-    color: "#111827",
+    color: "#fff",
   },
 
   countBadge: {
     minWidth: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: "#E9ECFF",
+    backgroundColor: "#22C55E",
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 8,
@@ -427,7 +442,7 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 11,
     fontWeight: "700",
-    color: "#5368F2",
+    color: "#fff",
   },
 
   onlineCount: {
@@ -470,7 +485,7 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -573,7 +588,7 @@ const styles = StyleSheet.create({
     width: 78,
     height: 46,
     borderRadius: 14,
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -666,7 +681,7 @@ const styles = StyleSheet.create({
   addContactIconText: {
     fontSize: 25,
     fontWeight: "300",
-    color: "#5368F2",
+    color: "#22C55E",
   },
 
   addContactContent: {
@@ -688,7 +703,7 @@ const styles = StyleSheet.create({
 
   arrow: {
     fontSize: 22,
-    color: "#5368F2",
+    color: "#22C55E",
     marginRight: 5,
   },
 
@@ -701,7 +716,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
     alignItems: "center",
     justifyContent: "center",
     elevation: 5,

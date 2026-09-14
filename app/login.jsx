@@ -20,21 +20,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 
-export default function Register() {
+export default function Login() {
   const router = useRouter();
-  const handleLogin = (login) => {
+  const handleRegister = (register) => {
     router.push({
-      pathname: "/login",
-    });
-  };
-  const handleContacts = () => {
-    router.push({
-      pathname: "/explore",
-    });
-  };
-  const handleRequests = () => {
-    router.push({
-      pathname: "/requests",
+      pathname: "/register",
     });
   };
   const [options, setOptions] = useState("Phone");
@@ -77,9 +67,9 @@ export default function Register() {
           {/* Header */}
           <View style={styles.header}>
             <View>
-              <Text style={styles.title}>Register</Text>
+              <Text style={styles.title}>Login</Text>
               <Text style={styles.subtitle}>
-                Hello, Create Your Account Here.
+                Hello, Welcome Back to your account.
               </Text>
             </View>
             <Image
@@ -143,12 +133,12 @@ export default function Register() {
                 </Pressable>
               </View>
               <Text style={{ color: "white", marginTop: 20 }}>
-                Already have an account?{" "}
+                Don't have an account?{" "}
                 <Text
-                  onPress={() => handleLogin()}
+                  onPress={() => handleRegister()}
                   style={{ color: "#22C55E" }}
                 >
-                  Login Here
+                  Register Here
                 </Text>
               </Text>
             </>
@@ -186,16 +176,14 @@ export default function Register() {
                 </Pressable>
               </View>
               <Text style={{ color: "white", marginTop: 20 }}>
-                Already have an account?{" "}
+                Don't have an account?{" "}
                 <Text
-                  onPress={() => handleLogin()}
+                  onPress={() => handleRegister()}
                   style={{ color: "#22C55E" }}
                 >
-                  Login Here
+                  Register Here
                 </Text>
               </Text>
-              <Text onPress={() => handleContacts()}>Contacts Page</Text>
-              <Text onPress={() => handleRequests()}>Requests Page</Text>
             </>
           )}
         </SafeAreaView>

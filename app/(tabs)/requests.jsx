@@ -1,18 +1,16 @@
 import {
+  ImageBackground,
   FlatList,
   Pressable,
-  SafeAreaView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "@/components/AppText";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
-
-
-const initialRequests= [
+const initialRequests = [
   {
     id: "1",
     name: "Rahul Sharma",
@@ -20,20 +18,20 @@ const initialRequests= [
     relation: "Friend",
     time: "5 min ago",
   },
-  {
-    id: "2",
-    name: "Priya Shah",
-    phone: "+91 98765 43211",
-    relation: "Family",
-    time: "20 min ago",
-  },
-  {
-    id: "3",
-    name: "Amit Patel",
-    phone: "+91 98765 43212",
-    relation: "Friend",
-    time: "1 hour ago",
-  },
+  // {
+  //   id: "2",
+  //   name: "Priya Shah",
+  //   phone: "+91 98765 43211",
+  //   relation: "Family",
+  //   time: "20 min ago",
+  // },
+  // {
+  //   id: "3",
+  //   name: "Amit Patel",
+  //   phone: "+91 98765 43212",
+  //   relation: "Friend",
+  //   time: "1 hour ago",
+  // },
 ];
 
 export default function Requests() {
@@ -41,13 +39,25 @@ export default function Requests() {
 
   const [requests, setRequests] = useState(initialRequests);
 
+  // const handleAccept = (id) => {
+  //   setRequests((currentRequests) =>
+  //     currentRequests.filter((request) => request.id !== id),
+  //   );
+  // };
+
   const handleAccept = (id) => {
     setRequests((currentRequests) =>
       currentRequests.filter((request) => request.id !== id),
     );
   };
 
-  const handleDecline = () => {
+  // const handleDecline = () => {
+  //   setRequests((currentRequests) =>
+  //     currentRequests.filter((request) => request.id !== id),
+  //   );
+  // };
+
+  const handleDecline = (id) => {
     setRequests((currentRequests) =>
       currentRequests.filter((request) => request.id !== id),
     );
@@ -62,7 +72,7 @@ export default function Requests() {
       .toUpperCase();
   };
 
-  const renderRequest = ({ item } ) => {
+  const renderRequest = ({ item }) => {
     return (
       <View style={styles.requestCard}>
         {/* Avatar */}
@@ -79,15 +89,11 @@ export default function Requests() {
 
             <Text style={styles.time}>{item.time}</Text>
           </View>
-
-          <Text style={styles.relation}>{item.relation}</Text>
-
+          {/* <Text style={styles.relation}>{item.relation}</Text> */}
           <Text style={styles.phone}>{item.phone}</Text>
-
           <Text style={styles.message}>
             Wants to add you as a trusted contact.
           </Text>
-
           {/* Actions */}
 
           <View style={styles.actionRow}>
@@ -117,24 +123,32 @@ export default function Requests() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* HEADER */}
+    <ImageBackground
+      source={require("../../assets/images/green_bg.jpg")}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <SafeAreaView style={styles.container}>
+          {/* HEADER */}
 
-      <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backText}>←</Text>
-        </Pressable>
+          <View style={styles.header}>
+            <Pressable style={styles.backButton} onPress={() => router.back()}>
+              <Text style={styles.backText}>←</Text>
+            </Pressable>
 
-        <View style={styles.headerContent}>
-          <Text style={styles.title}>Contact Requests</Text>
+            <View style={styles.headerContent}>
+              <Text style={styles.title}>Requests</Text>
 
-          <Text style={styles.subtitle}>Manage people who want to connect</Text>
-        </View>
-      </View>
+              <Text style={styles.subtitle}>
+                Manage people who want to connect
+              </Text>
+            </View>
+          </View>
 
-      {/* SUMMARY CARD */}
+          {/* SUMMARY CARD */}
 
-      <View style={styles.summaryCard}>
+          {/* <View style={styles.summaryCard}>
         <View style={styles.summaryIcon}>
           <Text style={styles.summaryIconText}>👥</Text>
         </View>
@@ -150,46 +164,52 @@ export default function Requests() {
         <View style={styles.countBadge}>
           <Text style={styles.countText}>{requests.length}</Text>
         </View>
-      </View>
+      </View> */}
 
-      {/* SECTION */}
+          {/* SECTION */}
 
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Requests</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Requests</Text>
 
-        <Text style={styles.sectionCount}>{requests.length} pending</Text>
-      </View>
-
-      {/* REQUEST LIST */}
-
-      <FlatList
-        data={requests}
-        keyExtractor={(item) => item.id}
-        renderItem={renderRequest}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <View style={styles.emptyIconContainer}>
-              <Text style={styles.emptyIcon}>✓</Text>
-            </View>
-
-            <Text style={styles.emptyTitle}>No pending requests</Text>
-
-            <Text style={styles.emptyText}>You're all caught up!</Text>
+            <Text style={styles.sectionCount}>{requests.length} pending</Text>
           </View>
-        }
-      />
-    </SafeAreaView>
+
+          {/* REQUEST LIST */}
+
+          <FlatList
+            data={requests}
+            keyExtractor={(item) => item.id}
+            renderItem={renderRequest}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContent}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <View style={styles.emptyIconContainer}>
+                  <Text style={styles.emptyIcon}>✓</Text>
+                </View>
+
+                <Text style={styles.emptyTitle}>No pending requests</Text>
+
+                <Text style={styles.emptyText}>You're all caught up!</Text>
+              </View>
+            }
+          />
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   /* CONTAINER */
 
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FC",
+    // backgroundColor: "#F7F8FC",
     paddingHorizontal: 20,
   },
 
@@ -230,12 +250,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "700",
-    color: "#111827",
+    color: "#fff",
   },
 
   subtitle: {
     fontSize: 12,
-    color: "#7B8494",
+    color: "#eee",
     marginTop: 3,
   },
 
@@ -283,7 +303,7 @@ const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#3446B8",
+    color: "#22C55E",
   },
 
   summaryText: {
@@ -299,7 +319,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 16,
 
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
 
     alignItems: "center",
     justifyContent: "center",
@@ -326,13 +346,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 19,
     fontWeight: "700",
-    color: "#111827",
+    color: "#fff",
   },
 
   sectionCount: {
     fontSize: 11,
     fontWeight: "600",
-    color: "#5368F2",
+    color: "#22C55E",
   },
 
   /* LIST */
@@ -375,7 +395,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 26,
 
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
 
     alignItems: "center",
     justifyContent: "center",
@@ -414,7 +434,7 @@ const styles = StyleSheet.create({
 
   relation: {
     fontSize: 11,
-    color: "#5368F2",
+    color: "#22C55E",
     marginTop: 3,
   },
 
@@ -445,7 +465,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 11,
 
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
 
     alignItems: "center",
     justifyContent: "center",
@@ -511,14 +531,14 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 17,
     fontWeight: "700",
-    color: "#111827",
+    color: "#fff",
 
     marginTop: 15,
   },
 
   emptyText: {
     fontSize: 12,
-    color: "#89919E",
+    color: "#eee",
 
     marginTop: 5,
   },

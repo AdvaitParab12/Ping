@@ -1,76 +1,92 @@
-import { StyleSheet, View, Image, Switch } from "react-native";
+import { ImageBackground, StyleSheet, View, Image, Switch } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/AppText";
+import Text from "@/components/AppText";
 
 export default function Home() {
   const [available, setAvailable] = useState(true);
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>Good Morning, User</Text>
-          <Text style={styles.subtitle}>Who do you want to reach?</Text>
-        </View>
-        <Image
-          source={require("../../assets/images/profile.png")}
-          style={{ width: 34, height: 34 }}
-        ></Image>
-      </View>
-      <View style={styles.card}>
-        <View style={styles.info}>
-          <Text style={styles.label}>YOUR PING STATUS</Text>
-
-          <View style={styles.statusRow}>
-            <View style={available ? styles.dot : styles.dot1} />
-
-            <Text style={styles.statusText}>
-              {available ? "Ready to receive" : "Unavailable"}
-            </Text>
+    <ImageBackground
+      source={require("../../assets/images/green_bg.jpg")}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.title}>Good Morning, User</Text>
+              <Text style={styles.subtitle}>Who do you want to reach?</Text>
+            </View>
+            <Image
+              source={require("../../assets/images/bg.jpg")}
+              style={styles.profileImage}
+            ></Image>
           </View>
+          <View style={styles.card}>
+            <View style={styles.info}>
+              <Text style={styles.label}>YOUR PING STATUS</Text>
 
-          <Text style={styles.description}>
-            {available
-              ? "Trusted contacts can Ping you."
-              : "You won't receive Pings right now"}
-          </Text>
-        </View>
-        <View style={styles.toggleContainer}>
-          <Switch
-            value={available}
-            onValueChange={setAvailable}
-            trackColor={{
-              false: "#D1D5DB",
-              true: "#22C55E",
-            }}
-            thumbColor="#FFFFFF"
-            ios_backgroundColor="#D1D5DB"
-          />
+              <View style={styles.statusRow}>
+                <View style={available ? styles.dot : styles.dot1} />
 
-          <Text style={styles.availableText}>
-            {available ? "Available" : "Unavailable"}
-          </Text>
-        </View>
+                <Text
+                  style={available ? styles.readyText : styles.unavailableText}
+                >
+                  {available ? "Ready to receive" : "Unavailable"}
+                </Text>
+              </View>
+
+              <Text style={styles.description}>
+                {available
+                  ? "Trusted contacts can Ping you."
+                  : "You won't receive Pings right now"}
+              </Text>
+            </View>
+            <View style={styles.toggleContainer}>
+              <Switch
+                value={available}
+                onValueChange={setAvailable}
+                trackColor={{
+                  false: "#D1D5DB",
+                  true: "#22C55E",
+                }}
+                thumbColor="#FFFFFF"
+                ios_backgroundColor="#D1D5DB"
+              />
+
+              {/* <Text
+                style={available ? styles.readyText : styles.unavailableText}
+              >
+                {available ? "Available" : "Unavailable"}
+              </Text> */}
+            </View>
+          </View>
+        </SafeAreaView>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   container: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingHorizontal: 20,
   },
 
   title: {
     fontSize: 28,
     fontFamily: "InterBold",
-    color: "black",
+    color: "white",
   },
   subtitle: {
-    color: "gray",
+    color: "#eee",
   },
   header: {
     width: "100%",
@@ -134,7 +150,7 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 20,
     fontFamily: "InterSemiBold",
-    color: "#111827",
+    color: "#22C55E",
   },
 
   description: {
@@ -155,4 +171,20 @@ const styles = StyleSheet.create({
     color: "#16A34A",
   },
   contacts: {},
+  readyText: {
+    color: "#22C55E",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  profileImage: {
+    height: 48,
+    width: 48,
+    borderRadius: 50,
+  },
+
+  unavailableText: {
+    color: "#444",
+    fontSize: 14,
+    fontWeight: "500",
+  },
 });

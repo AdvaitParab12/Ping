@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
-  SafeAreaView,
+  ImageBackground,
   StyleSheet,
-  Text,
   View,
   Pressable,
   ScrollView,
 } from "react-native";
+import Text from "@/components/AppText";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-
 
 const activities = [
   {
@@ -60,124 +60,136 @@ export default function Activity() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* HEADER */}
+    <ImageBackground
+      source={require("../../assets/images/green_bg.jpg")}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        {" "}
+        <SafeAreaView style={styles.container}>
+          {/* HEADER */}
 
-      <View style={styles.header}>
-        <Text style={styles.title}>Activity</Text>
+          <View style={styles.header}>
+            <Text style={styles.title}>Activity</Text>
 
-        <Pressable>
-          <Text style={styles.filterIcon}>☰</Text>
-        </Pressable>
-      </View>
+            {/* <Pressable>
+              <Text style={styles.filterIcon}>☰</Text>
+            </Pressable> */}
+          </View>
 
-      {/* FILTER */}
+          {/* FILTER */}
 
-      <View style={styles.filterContainer}>
-        {(["All", "Sent", "Received"] ).map((item) => (
-          <Pressable
-            key={item}
-            onPress={() => setFilter(item)}
-            style={[
-              styles.filterButton,
-              filter === item && styles.activeFilter,
-            ]}
+          <View style={styles.filterContainer}>
+            {["All", "Sent", "Received"].map((item) => (
+              <Pressable
+                key={item}
+                onPress={() => setFilter(item)}
+                style={[
+                  styles.filterButton,
+                  filter === item && styles.activeFilter,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === item && styles.activeFilterText,
+                  ]}
+                >
+                  {item}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.content}
           >
-            <Text
-              style={[
-                styles.filterText,
-                filter === item && styles.activeFilterText,
-              ]}
-            >
-              {item}
-            </Text>
-          </Pressable>
-        ))}
+            <Text style={styles.dateTitle}>Today</Text>
+
+            {filteredActivities
+              .filter(
+                (item) =>
+                  item.time.includes("min") || item.time.includes("hour"),
+              )
+              .map((item) => (
+                <View key={item.id} style={styles.activityCard}>
+                  <View style={styles.avatar}>
+                    <Text style={styles.avatarText}>{item.initials}</Text>
+                  </View>
+
+                  <View style={styles.activityInfo}>
+                    <Text style={styles.activityName}>
+                      {item.type === "sent"
+                        ? `Ping to ${item.name}`
+                        : `Ping from ${item.name}`}
+                    </Text>
+
+                    <Text
+                      style={[
+                        styles.activityStatus,
+                        item.type === "sent"
+                          ? styles.sentText
+                          : styles.receivedText,
+                      ]}
+                    >
+                      {item.type === "sent" ? "Sent" : "Received"}
+                    </Text>
+                  </View>
+
+                  <Text style={styles.time}>{item.time}</Text>
+                </View>
+              ))}
+
+            <Text style={styles.dateTitle}>Yesterday</Text>
+
+            {filteredActivities
+              .filter((item) => item.time.includes("Yesterday"))
+              .map((item) => (
+                <View key={item.id} style={styles.activityCard}>
+                  <View style={styles.avatar}>
+                    <Text style={styles.avatarText}>{item.initials}</Text>
+                  </View>
+
+                  <View style={styles.activityInfo}>
+                    <Text style={styles.activityName}>
+                      {item.type === "sent"
+                        ? `Ping to ${item.name}`
+                        : `Ping from ${item.name}`}
+                    </Text>
+
+                    <Text
+                      style={[
+                        styles.activityStatus,
+                        item.type === "sent"
+                          ? styles.sentText
+                          : styles.receivedText,
+                      ]}
+                    >
+                      {item.type === "sent" ? "Sent" : "Received"}
+                    </Text>
+                  </View>
+
+                  <Text style={styles.time}>{item.time}</Text>
+                </View>
+              ))}
+          </ScrollView>
+        </SafeAreaView>
       </View>
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
-      >
-        <Text style={styles.dateTitle}>Today</Text>
-
-        {filteredActivities
-          .filter(
-            (item) => item.time.includes("min") || item.time.includes("hour"),
-          )
-          .map((item) => (
-            <View key={item.id} style={styles.activityCard}>
-              <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{item.initials}</Text>
-              </View>
-
-              <View style={styles.activityInfo}>
-                <Text style={styles.activityName}>
-                  {item.type === "sent"
-                    ? `Ping to ${item.name}`
-                    : `Ping from ${item.name}`}
-                </Text>
-
-                <Text
-                  style={[
-                    styles.activityStatus,
-                    item.type === "sent"
-                      ? styles.sentText
-                      : styles.receivedText,
-                  ]}
-                >
-                  {item.type === "sent" ? "Sent" : "Received"}
-                </Text>
-              </View>
-
-              <Text style={styles.time}>{item.time}</Text>
-            </View>
-          ))}
-
-        <Text style={styles.dateTitle}>Yesterday</Text>
-
-        {filteredActivities
-          .filter((item) => item.time.includes("Yesterday"))
-          .map((item) => (
-            <View key={item.id} style={styles.activityCard}>
-              <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{item.initials}</Text>
-              </View>
-
-              <View style={styles.activityInfo}>
-                <Text style={styles.activityName}>
-                  {item.type === "sent"
-                    ? `Ping to ${item.name}`
-                    : `Ping from ${item.name}`}
-                </Text>
-
-                <Text
-                  style={[
-                    styles.activityStatus,
-                    item.type === "sent"
-                      ? styles.sentText
-                      : styles.receivedText,
-                  ]}
-                >
-                  {item.type === "sent" ? "Sent" : "Received"}
-                </Text>
-              </View>
-
-              <Text style={styles.time}>{item.time}</Text>
-            </View>
-          ))}
-      </ScrollView>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FC",
     paddingHorizontal: 20,
   },
-
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -189,7 +201,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "800",
-    color: "#111827",
+    color: "#fff",
   },
 
   filterIcon: {
@@ -234,7 +246,7 @@ const styles = StyleSheet.create({
   dateTitle: {
     fontSize: 14,
     fontWeight: "800",
-    color: "#111827",
+    color: "#eee",
     marginBottom: 10,
     marginTop: 5,
   },
@@ -252,7 +264,7 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 19,
-    backgroundColor: "#5368F2",
+    backgroundColor: "#22C55E",
     alignItems: "center",
     justifyContent: "center",
   },
